@@ -6,48 +6,6 @@ import math
 import pandas as pd
 import sys
 
-"""
-SHEET_ID = "1tvTXSsFDK5xAVALQPdDPJOitBufJE6UB_MN4q5nbLXk"
-SHEET_NAME = "CARDSHEET"
-url_base = f"https://docs.google.com/spreadsheets/d/"
-url_base += SHEET_ID+"/gviz/tq?tqx=out:csv&sheet="
-sigils_url = url_base+"Sigils"
-cards_url = url_base+"Cards"
-
-
-# constant parameters
-
-# min # of cost to show as number instead of draw
-COSTTHRESH = {
-    "blood": 5,
-    "bone": 5,
-    "energy": 13,
-
-    "shattered garnet": 4,
-    "shattered ruby": 4,
-    "shattered topaz": 4,
-    "shattered emerald": 4,
-    "shattered sapphire": 4,
-    "shattered amethyst": 4,
-    
-    "garnet": 4,
-    "ruby": 4,
-    "topaz": 4,
-    "emerald": 4,
-    "sapphire": 4,
-    "amethyst": 4,
-    
-    "clowny": 1,
-    "nuclear": 1,
-    "malware": 1,
-    "pure": 1
-}
-
-TOKENSIGILS = ["Fledgling","Frozen Away","Creeping Outwards","Loose Tail"]
-
-SIGILCOLUMNS = [6,7,8] # list of column indicies that have sigils (0-indexed)
-"""
-
 from printer_config import *
 
 # fonts
@@ -372,24 +330,17 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
     if True:
         # variable stat checker
         # hardcoded unfortunately
-        if "Ant Power" in info["traits"]:
-            alphaPaste(img,144,1351,"sigils/variable/Ant Power.png")
-        elif "Battery Power" in info["traits"]:
-            alphaPaste(img,144,1351,"sigils/variable/Battery Power.png")
-        elif "Blood Power" in info["traits"]:
-            alphaPaste(img,144,1351,"sigils/variable/Blood Power.png")
-        elif "Bone Power" in info["traits"]:
-            alphaPaste(img,144,1351,"sigils/variable/Bone Power.png")
-        elif "Gem Power" in info["traits"]:
-            alphaPaste(img,142,1351,"sigils/variable/Gem Power.png")
-        elif "Mirror Power" in info["traits"]:
-            alphaPaste(img,144,1351,"sigils/variable/Mirror Power.png")
-        elif "Hand Power" in info["traits"]:
-            alphaPaste(img,142,1351,"sigils/variable/Hand Power.png")
-        elif "Dice Power"in info["traits"]:
-            alphaPaste(img,142,1351,"sigils/variable/Dice Power.png")
+        print(info["traits"])
+        if info["traits"] != []:
+            powerName = info["traits"][0]
+
+            try:
+                alphaPaste(img,144,1351,"sigils/variable/"+powerName+".png")
+            except FileNotFoundError:
+                print("unknown variable power: "+powerName)
+                shadowText(I1,148,1331,str(int(info["power"])),statFont,anchor="la")
+            # end try
         else:
-            #shadowText(I1,151,1331,"X",statFont,anchor="la")
             shadowText(I1,148,1331,str(int(info["power"])),statFont,anchor="la")
         # end if
     # end if
