@@ -4,6 +4,7 @@
 
 
 # the middle part of the google docs url.
+#SHEET_ID = "1tvTXSsFDK5xAVALQPdDPJOitBufJE6UB_MN4q5nbLXk"
 SHEET_ID = "1tvTXSsFDK5xAVALQPdDPJOitBufJE6UB_MN4q5nbLXk"
 
 # Unused.
@@ -28,7 +29,7 @@ cards_url = url_base+"Cards"
 COSTTHRESH = {
     "blood": 5,
     "bone": 5,
-    "energy": 13,
+    "energy": 5,
 
     "shattered garnet": 4,
     "shattered ruby": 4,

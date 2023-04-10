@@ -6,13 +6,15 @@ import math
 import pandas as pd
 import sys
 
-SHEET_ID = "1tvTXSsFDK5xAVALQPdDPJOitBufJE6UB_MN4q5nbLXk"
+#SHEET_ID = "1tvTXSsFDK5xAVALQPdDPJOitBufJE6UB_MN4q5nbLXk"
+SHEET_ID = "1J6Too7AxI6TMLHZrcS3u9kb_83REpuemdfioizFISz4"
 SHEET_NAME = "CARDSHEET"
 url_base = f"https://docs.google.com/spreadsheets/d/"
 url_base += SHEET_ID+"/gviz/tq?tqx=out:csv&sheet="
 sigils_url = url_base+"Sigils"
 cards_url = url_base+"Cards"
 
+print("HI IM THE CONFIG FILE")
 
 
 # constant parameters

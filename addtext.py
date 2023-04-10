@@ -36,7 +36,9 @@ def fetchSigilText(name):
 
 def fetchCardByName(name):
     # I am a piece of garbage (sung in G blues scale)
-    cdf = (pd.read_csv(cards_url)).to_dict('split')
+    #print(pd.read_csv(cards_url))
+    
+    cdf = pd.read_csv(cards_url).to_dict('split')
     found = False
     n=len(cdf["data"])
     idn = 0
@@ -520,12 +522,22 @@ def main():
         n = len(a)
 
         if n>0:
+            """
             try:
                 s = int(a[0])-2
-            except ValueError:
+            except:
                 # ok maybe try a string just for funny
                 s = fetchCardByName(a[0])
             # end try
+            """
+
+            if type(a[0]) == type("aa"):
+                s = fetchCardByName(a[0])
+            elif type(a[0]) == type(2):
+                s = int(s)
+            #end if
+
+            # idk what else to try here
 
             if n>1:
                 try:
