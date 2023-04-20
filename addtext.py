@@ -51,7 +51,7 @@ def fetchCardByName(name):
             # end if
         # end for
     except:
-        print("wacky error occurred")
+        error("Wacky error occurred! Is your sheet publicly viewable?")
     if not found:
         print("Failed to find card by name: "+name)
     # end if
