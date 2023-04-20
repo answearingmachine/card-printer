@@ -85,17 +85,16 @@ def printAllCards(start=-1,end=99999,mode=0):
             "tribes": [],
         }
 
-        # Power and health hsdujifgsdhiof
-        #print(card[4])
+        # Power and health
         # Not reading the X value??
         # redesign to ignore it
         if str(card[COLUMNS["power"]]) == str(math.nan):
             #print("yeah there's no power here")
-            cardInfo["power"] = -1
+            cardInfo["power"] = 0
         # end if
         if str(card[COLUMNS["health"]]) == str(math.nan):
             #print("yeah there's no health here")
-            cardInfo["health"] = -1
+            cardInfo["health"] = 0
         # end if
 
         # Cost (this will get complicated)
@@ -125,10 +124,11 @@ def printAllCards(start=-1,end=99999,mode=0):
         # Sigils - reworking now
         try:
             sigilsRaw = card[COLUMNS["sigils"]].split(",")
-            print(sigilsRaw)
             for i in sigilsRaw:
                 i = i.strip()
-                validSigil = False
+                if i == "":
+                    continue
+                # end if
                 try:
                     dumbString = i+"o"
                     cardInfo["sigils"].append(i)
@@ -140,15 +140,25 @@ def printAllCards(start=-1,end=99999,mode=0):
         except AttributeError:
             #print("no sigils")
             integer = 1
-        # end something
+        # end try
 
 
-        # Traits - TODO
+        # Traits
         try:
-            dumbString = card[10]+"o"
-            cardInfo["traits"].append(card[10])
-        except TypeError:
-            #print("NOT A STRING")
+            traitsRaw = card[COLUMNS["traits"]].split(",")
+            for i in traitsRaw:
+                i = i.strip()
+                if i == "":
+                    continue
+                # end if
+                try:
+                    dumbString = i+"o"
+                    cardInfo["traits"].append(i)
+                except TypeError:
+                    integer = 1
+                # end try
+            # end for
+        except AttributeError:
             integer = 1
         # end try
 
@@ -338,21 +348,27 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
     # Next, the power and health. The numbers.
     if True:
         # variable stat checker
-        # hardcoded unfortunately
-        print(info["traits"])
+        #print(info["traits"])
+        normalPower = True
         if info["traits"] != []:
-            powerName = info["traits"][0]
-
-            try:
-                alphaPaste(img,144,1351,"sigils/variable/"+powerName+".png")
-            except FileNotFoundError:
-                print("unknown variable power: "+powerName)
-                shadowText(I1,148,1331,str(int(info["power"])),statFont,anchor="la")
-            # end try
-        else:
+            for i in info["traits"]:
+                if "Power" in i:
+                    normalPower = False
+                    try:
+                        alphaPaste(img,144,1351,"sigils/variable/"+i.strip()+".png")
+                    except FileNotFoundError:
+                        print("unknown variable power: "+powerName)
+                        shadowText(I1,148,1331,str(int(info["power"])),
+                                   statFont,anchor="la")
+                    # end try
+                # end if
+            # end for
+        # end if
+        if normalPower:
             shadowText(I1,148,1331,str(int(info["power"])),statFont,anchor="la")
         # end if
     # end if
+    
     shadowText(I1,968,1331,str(int(info["health"])),statFont,anchor="ra")
 
     # Next, we will add the sigils.
