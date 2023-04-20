@@ -29,7 +29,7 @@ cards_url = url_base+"Cards"
 COSTTHRESH = {
     "blood": 5,
     "bone": 5,
-    "energy": 5,
+    "energy": 13,
 
     "shattered garnet": 4,
     "shattered ruby": 4,
@@ -59,6 +59,21 @@ COSTTHRESH = {
 # Sigils that need to reference another card by name.
 TOKENSIGILS = ["Fledgling","Frozen Away","Creeping Outwards","Loose Tail"]
 
-SIGILCOLUMNS = [6,7,8] # list of column indicies that have sigils (0-indexed)
+#SIGILCOLUMNS = [6,7,8] # list of column indicies that have sigils (0-indexed)
 # probably don't touch these because I think I left the other ones hardcoded lol
 
+COLUMNS = {
+    "name": 0,
+    "temple": 1,
+    "tier": 2,
+    "cost": 3,
+    "power": 4,
+    "health": 5,
+    "sigils": 6,
+
+    "token": 9,
+    "traits": 10,
+    "tribes": 11,
+    "flavor": 12,
+    "illus_credit": 14   
+}

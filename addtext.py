@@ -44,14 +44,14 @@ def fetchCardByName(name):
     idn = 0
     try:
         for i in range(n):
-            if cdf["data"][i][0].lower()==name.lower():
+            if cdf["data"][i][COLUMNS["name"]].lower()==name.lower():
                 idn = i
                 found = True
                 break
             # end if
         # end for
     except:
-        error("Wacky error occurred! Is your sheet publicly viewable?")
+        print("Wacky error occurred! Is your sheet publicly viewable?")
     if not found:
         print("Failed to find card by name: "+name)
     # end if
@@ -69,15 +69,15 @@ def printAllCards(start=-1,end=99999,mode=0):
     # end if
     for index in cardRange:
         card = cdf["data"][index]
-        print("THIS CARD: "+str(card[0]))
+        print("THIS CARD: "+str(card[COLUMNS["name"]]))
         cardInfo = {
-            "name": str(card[0]),
-            "temple": str(card[1]),
-            "tier": str(card[2]),
-            "power": card[4],
-            "health": card[5],
-            "token": str(card[9]), # todo lol
-            "flavor": str(card[12]),
+            "name": str(card[COLUMNS["name"]]),
+            "temple": str(card[COLUMNS["temple"]]),
+            "tier": str(card[COLUMNS["tier"]]),
+            "power": card[COLUMNS["power"]],
+            "health": card[COLUMNS["health"]],
+            "token": str(card[COLUMNS["token"]]), # todo lol
+            "flavor": str(card[COLUMNS["flavor"]]),
 
             "cost": [],
             "sigils": [],
@@ -89,17 +89,17 @@ def printAllCards(start=-1,end=99999,mode=0):
         #print(card[4])
         # Not reading the X value??
         # redesign to ignore it
-        if str(card[4]) == str(math.nan):
+        if str(card[COLUMNS["power"]]) == str(math.nan):
             #print("yeah there's no power here")
             cardInfo["power"] = -1
         # end if
-        if str(card[5]) == str(math.nan):
+        if str(card[COLUMNS["health"]]) == str(math.nan):
             #print("yeah there's no health here")
             cardInfo["health"] = -1
         # end if
 
         # Cost (this will get complicated)
-        rawCostString = str(card[3]).lower()
+        rawCostString = str(card[COLUMNS["cost"]]).lower()
         #print("cost: "+rawCostString)
         if rawCostString != "free" and not ("nan" in rawCostString):
             typeSplit = rawCostString.split("+")
@@ -122,19 +122,26 @@ def printAllCards(start=-1,end=99999,mode=0):
             cardInfo["cost"] = typeSplit
         # end if
 
+        # Sigils - reworking now
+        try:
+            sigilsRaw = card[COLUMNS["sigils"]].split(",")
+            print(sigilsRaw)
+            for i in sigilsRaw:
+                i = i.strip()
+                validSigil = False
+                try:
+                    dumbString = i+"o"
+                    cardInfo["sigils"].append(i)
+                except TypeError:
+                    #print("NOT A STRING")
+                    integer = 1
+                # end try
+            # end for
+        except AttributeError:
+            #print("no sigils")
+            integer = 1
+        # end something
 
-        # Sigils - may rework if i move away from having 3 columns
-        for i in SIGILCOLUMNS:
-            #print(card[i])
-            validSigil = False
-            try:
-                dumbString = card[i]+"o"
-                cardInfo["sigils"].append(card[i])
-            except TypeError:
-                #print("NOT A STRING")
-                integer = 1
-            # end try
-        # end for
 
         # Traits - TODO
         try:
