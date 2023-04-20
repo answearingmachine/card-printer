@@ -357,7 +357,7 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
                     try:
                         alphaPaste(img,144,1351,"sigils/variable/"+i.strip()+".png")
                     except FileNotFoundError:
-                        print("unknown variable power: "+powerName)
+                        print("unknown variable power: "+i)
                         shadowText(I1,148,1331,str(int(info["power"])),
                                    statFont,anchor="la")
                     # end try
