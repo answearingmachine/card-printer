@@ -374,6 +374,15 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
     # Next, we will add the sigils.
     sigilx = 151
     sigily = 921
+    conduit = False
+    for isig in info["sigils"]:
+        if "Conduit" in isig:
+            conduit = True
+        # end if
+    # end for
+    if conduit:
+        alphaPaste(img,50,850,"conduit_large.png")
+    #end if
     for isig in info["sigils"]:
         #print(isig)
         # fetch icon and paste
