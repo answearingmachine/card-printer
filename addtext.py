@@ -14,6 +14,7 @@ statFont = ImageFont.truetype('Cambria.ttf', 109)
 textFont = ImageFont.truetype('Cambria.ttf', 33)
 boldFont = ImageFont.truetype('Cambria-Bold.ttf', 33)
 italFont = ImageFont.truetype('Cambria-Italic.ttf', 33)
+artsFont = ImageFont.truetype('Poly-Regular.ttf', 42)
 
 def fetchSigilText(name):
     sdf = (pd.read_csv(sigils_url)).to_dict('split')
@@ -83,6 +84,8 @@ def printAllCards(start=-1,end=99999,mode=0):
             "sigils": [],
             "traits": [],
             "tribes": [],
+
+            "artist": str(card[COLUMNS["illus_credit"]]),
         }
 
         # Power and health
@@ -398,15 +401,21 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
             halves = text.split("(new card)")
             text = halves[0]+'\"'+info["token"]+'\"'+halves[1]
         # end if
-        textLines = text.split("\n")
+        try:
+            textLines = text.split("\n")
         
-        n = len(textLines)
-        if n == 1:
+            n = len(textLines)
+            if n == 1:
+                textOffset = 15
+                singleLine = True
+            else:
+                textOffset = -5
+                singleLine = False
+        except AttributeError:
             textOffset = 15
             singleLine = True
-        else:
-            textOffset = -5
-            singleLine = False
+            textLines[0] = "missingno"
+            
 
         # print name
         l = I1.textlength(isig+": ",boldFont)
@@ -491,6 +500,14 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
 
     # Name the card.
     shadowText(I1,136,136,info["name"],nameFont)
+
+    # Please, sign your work.
+    artistName = info["artist"]
+    if artistName != "nan":
+        dumbString = artistName + "o"
+        shadowText(I1,560,1375,"Illus. "+artistName,artsFont,anchor="ma")
+    else:
+        print("no artist?")
         
     # uhhh yeah
     if show:
@@ -500,6 +517,7 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
         filePath = prefix+info["name"]+".png"
         img.save(filePath)
     # end if
+
 # end def
 
 def shadowText(image,x,y,text,font,anchor="la"):

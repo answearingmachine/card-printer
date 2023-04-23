@@ -75,5 +75,5 @@ COLUMNS = {
     "traits": 10,
     "tribes": 11,
     "flavor": 12,
-    "illus_credit": 14   
+    "illus_credit": 14
 }
