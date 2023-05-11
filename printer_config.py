@@ -37,6 +37,9 @@ COSTTHRESH = {
     "shattered emerald": 4,
     "shattered sapphire": 4,
     "shattered amethyst": 4,
+
+    # I've got a hunch.
+    "shattered" : 4,
     
     "garnet": 4,
     "ruby": 4,
@@ -58,6 +61,9 @@ COSTTHRESH = {
 
 # Sigils that need to reference another card by name.
 TOKENSIGILS = ["Fledgling","Frozen Away","Creeping Outwards","Loose Tail"]
+
+# All-caps markers for special sigil types/interactions.
+METASIGILS = ["CELL","CONDUIT","TRANSFORM","RAINBOW","LATCH"]
 
 #SIGILCOLUMNS = [6,7,8] # list of column indicies that have sigils (0-indexed)
 # probably don't touch these because I think I left the other ones hardcoded lol
