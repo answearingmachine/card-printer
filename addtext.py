@@ -375,8 +375,8 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
     shadowText(I1,968,1331,str(int(info["health"])),statFont,anchor="ra")
 
     # Next, we will add the sigils.
-    sigilx = 151
-    sigily = 921
+    sigilx = 150
+    sigily = 920
     conduit = False
     for isig in info["sigils"]:
         if "Conduit" in isig:
@@ -388,6 +388,12 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
     #end if
     for isig in info["sigils"]:
         #print(isig)
+        # see if this is a wacky meta sigil like cell or latcher
+        if isig in METASIGILS:
+            alphaPaste(img,0,sigily,isig+".png")
+            sigily+=120
+            continue
+        #end if
         # fetch icon and paste
         try:
             sigilImg = Image.open("sigils/"+isig+".png")
@@ -491,12 +497,14 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
             )
 
     # At last, grace it with a description. Something for flavor.
-    I1.text((561,sigily),
-            info["flavor"],
-            fill=(0,0,0),
-            font=italFont,
-            anchor="ma"
-            )
+    if info["flavor"] != "BLANK":
+        I1.text((561,sigily),
+                info["flavor"],
+                fill=(0,0,0),
+                font=italFont,
+                anchor="ma"
+                )
+    #end if
 
     # Name the card.
     shadowText(I1,136,136,info["name"],nameFont)
