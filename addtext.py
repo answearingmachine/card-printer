@@ -299,11 +299,13 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
             try:
                 costImg = Image.open("cost/"+string+".png")
             except FileNotFoundError:
-                string = string[:-1]
-                costImg = Image.open("cost/"+string+".png")
-            except:
-                print("Unknown cost: "+string)
-                costImg = Image.open("cost/zerror.png")
+                try:
+                    string = string[:-1]
+                    costImg = Image.open("cost/"+string+".png")
+                except:
+                    print("Unknown cost: "+string)
+                    costImg = Image.open("cost/zerror.png")
+                # end try
             # end try
             w = costImg.getbbox()[2]
             h = costImg.getbbox()[3]
