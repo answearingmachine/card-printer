@@ -1,0 +1,436 @@
+## Tech
+### Uncommon
+Cat with a Gun - 1
+## Beast
+### Side Deck
+Aquasquirrel - 3
+Broken Egg - 3
+Dam - 3
+Krill - 3
+Squirrel - 3
+### Common
+Adder - 3
+Alpha - 3
+Ant Queen - 3
+Axolotl - 3
+Bat - 3
+Beaver - 3
+Bee - 3
+Beehive - 3
+Bell Tentacle - 3
+Bloodhound - 3
+Bullet Ant - 3
+Bullfrog - 3
+Cane Toad - 3
+Cicada - 3
+Cockroach - 3
+Corpse Maggots - 3
+Coyote - 3
+Dire Wolf - 3
+Dire Wolf Pup - 3
+Elk - 3
+Elk Fawn - 3
+Field mice - 3
+Flying Ant - 3
+Great White - 3
+Grizzly - 3
+Hand Tentacle - 3
+Hawk - 3
+Kingfisher - 3
+Leucochloridium - 3
+Lil' Frog - 3
+Mantis - 3
+Mealworm - 3
+Mirror Tentacle - 3
+Mole - 3
+Mud Turtle - 3
+Octopus - 3
+Opossum - 3
+Porcupine - 3
+Pronghorn - 3
+Rabbit - 3
+Raccoon - 3
+Rat king - 3
+Rattler - 3
+Raven - 3
+Raven Egg - 3
+Ringworm - 3
+River Otter - 3
+River Snapper - 3
+Salamander - 3
+Skink - 3
+Skunk - 3
+Sparrow - 3
+Squirrel Ball - 3
+Stoat - 3
+Tadpole - 3
+Tick - 3
+Turkey Vulture - 3
+Warren - 3
+Wild Bull - 3
+Wolf - 3
+Wolf Cub - 3
+Wolverine - 3
+Worker Ant - 3
+Wriggling Tail - 3
+### Uncommon
+Black Goat - 1
+Cat - 1
+Lammergier - 1
+Magpie - 1
+Moose Buck - 1
+Pack Mule - 1
+Red Hart - 1
+Rooster - 1
+Salmon - 1
+### Rare
+Amalgam - 1
+Child 13 - 1
+Geck - 1
+God Dam - 1
+Great Kraken - 1
+Hodag - 1
+Hrokkall - 1
+Mantis God - 1
+Mole Man - 1
+Ouroboros - 1
+Pack Rat - 1
+Urayuli - 1
+Wendigo - 1
+### Talking
+Conceited Cat - 1
+Cormorant - 1
+Jackrabbit - 1
+Midwife Frog - 1
+Noble Stag - 1
+Stinkbug - 1
+Stunted Wolf - 1
+Terrible Goose - 1
+The Stoat - 1
+Wild Mutt - 1
+## Undead
+### Side Deck
+Shambling Cairn - 3
+Skeleton - 3
+### Common
+Abomination - 3
+Allip - 3
+Animator - 3
+Banshee - 3
+Big Bones - 3
+Big Dig - 3
+Bone Devil - 3
+Bone Scrounger - 3
+Bonehound - 3
+Cadaver Rat - 3
+Carrion Mouth - 3
+Clot - 3
+Dalgyal - 3
+Disturbed Grave - 3
+Draugr - 3
+Ectoplasm - 3
+Exorcist - 3
+Frank & Stein - 3
+Gargoyle - 3
+Ghast - 3
+Ghost Ship - 3
+Ghoul - 3
+Gnarl Bark - 3
+Gone - 3
+Grave Diglin - 3
+Gravebard - 3
+Gravedigger - 3
+Grave Hopper - 3
+Hanged Man - 3
+Head Hunter - 3
+Jikinikki - 3
+Librarian - 3
+Lich - 3
+Meatman - 3
+Mimic - 3
+Mound of Flesh - 3
+Mummy Lord - 3
+Nosferatu - 3
+Nurikabe - 3
+Pati-ant zero - 3
+Plague Doctor - 3
+Poltergeist - 3
+Posessed Armor - 3
+Privateer - 3
+Revenant - 3
+Sarcophagus - 3
+Scarecrow - 3
+Shade - 3
+Shadow - 3
+Skelemagus - 3
+Skelemancer - 3
+Skeleton Crew - 3
+Spine Wyrm - 3
+Spirit Orb - 3
+The Bloated - 3
+The Walkers - 3
+Tsukumogami - 3
+Underworld Centurion - 3
+Wechuge - 3
+Zombie - 3
+The Smoke - 3
+### Uncommon
+Nachzehrer - 1
+Pharaoh's Pets - 1
+Undead Cat - 1
+### Rare
+Bone Heap - 1
+Bone Lord's Horn - 1
+Cerberus - 1
+Davy Jones - 1
+Dead Hand - 1
+Drowned Soul - 1
+Grave Knight - 1
+Headless Horseman - 1
+Long Elk - 1
+Necromancer - 1
+Night Shifters - 1
+Pumpkin King - 1
+Skeletaur - 1
+Skeleton Army - 1
+Slinger's Soul - 1
+Spine Ripper - 1
+Tomb Robber - 1
+### Talking
+Bones Malone - 1
+Burnt Body - 1
+Chaotic Corpse - 1
+Gnawed Remains - 1
+Grave Mason - 1
+Scurvy Cap'n - 1
+Star Weaver - 1
+Unlucky Corpse - 1
+Unseelie Queen - 1
+## Tech
+### Side Deck
+L33pbot - 3
+Null Conduit - 3
+### Common
+49er - 3
+Alarm Bot - 3
+4ntdroid - 3
+Archiver - 3
+Automaton - 3
+Pop-up Blocker - 3
+Bolthound - 3
+Bone Mill - 3
+Boom-o-latcher - 3
+Buff Conduit - 3
+C-Diver - 3
+Cable Latcher - 3
+Double Gunner - 3
+Draugear - 3
+Energy Bot - 3
+Exeskeleton - 3
+Explode Bot - 3
+Factory Conduit - 3
+Gamblobot - 3
+Gift Bot - 3
+Guardian Cell - 3
+Gunbot - 3
+Healing Conduit - 3
+Insectodrone - 3
+Junk-0 - 3
+Kind Cell - 3
+M34t Bot - 3
+Marrow Cell - 3
+Mox Memory Unit - 3
+Mox Hardware Unit - 3
+Mox Processing Unit - 3
+Nanoarmor Conduit - 3
+Nucleocharger - 3
+Null Mage - 3
+Observer - 3
+Overcharger - 3
+Overseer - 3
+Pipe Bomb - 3
+Pon - 3
+Pylonmancer - 3
+Rooktank - 3
+Scrapdigger - 3
+Scrapton - 3
+Security System - 3
+Sentry Drone - 3
+Shield Bot - 3
+Shield Latcher - 3
+Shovester - 3
+Skel-e-latcher - 3
+Sniper Bot - 3
+Sparkplug - 3
+Splinter Cell - 3
+Springknight - 3
+Steambot - 3
+Steel Mice - 3
+Swapbot - 3
+Technoripper - 3
+Thick Droid - 3
+Tough Cell - 3
+50-nar - 3
+C0pp3r-h34d - 3
+Core-v1d - 3
+K-9 - 3
+Qu177 - 3
+Chum Conduit - 3
+max energy keeper - 3
+### Uncommon
+Bad Fish - 1
+Bishobot - 1
+Exeskelemagbot - 1
+Good Fish - 1
+Gr1zz - 1
+RoboBoardScale.obj - 1
+### Rare
+Borg Poly-worg - 1
+Curve Hopper - 1
+Energy Conduit - 1
+Kingdroid - 1
+Mrs. Bomb - 1
+Ourobot - 1
+Overclock Conduit - 1
+Plasma Jimmy - 1
+Quickdraw Bot - 1
+Shutterbug - 1
+Titanium Titan - 1
+### Talking
+Blue Bot - 1
+Cyber Hero - 1
+Dredger - 1
+Holo-Trader - 1
+Inspector - 1
+Maintenance Droid - 1
+Melter - 1
+Steven - 1
+## Magick
+### Side Deck
+Emerald Mox - 3
+Ruby Mox - 3
+Sapphire Mox - 3
+Prismatic Shards - 3
+### Common
+Prism Mox - 3
+Erratic Scholar - 3
+Mage Pupil - 3
+Mage Slayer - 3
+Mirror Mage - 3
+Spell Slinger - 3
+Stasis Mage - 3
+### Rare
+Grand Astrologer - 1
+Flawless Clockwork - 1
+### Talking
+Brush Mage - 1
+### Common
+Alchemist - 3
+Corpsebloom Overgrowth - 3
+Crooked Clawbearer - 3
+Crystalline Carrier - 3
+Dark Abjurer - 3
+Ethereal Conflaration - 3
+Gem Smith - 3
+Gloom Virtuoso - 3
+Green Mage - 3
+Inkblot Scrivener - 3
+Jade Automata - 3
+Shade Soul - 3
+Splitmind Maniac - 3
+Stim Mage - 3
+Tenebrose Vessel - 3
+Twilight Magus - 3
+Umbral Servant - 3
+### Uncommon
+Shadow Boxer - 1
+### Rare
+Folding Weaver - 1
+Gloam Archmagus - 1
+Skulking Valravn - 1
+Masked Gemhorror - 1
+Grand Transmuter - 1
+Void maw - 1
+Umbral Puppeteer - 1
+### Talking
+Slime Mage - 1
+### Common
+Exalted Warden - 3
+Gem Banneret - 3
+Guardian Mage - 3
+Iron Maiden - 3
+Mage Knight - 3
+Mox Mage - 3
+Obdurate Marauder - 3
+Orange mage - 3
+Practice Wizard - 3
+Resolute Gemsmith - 3
+Ruby Golem - 3
+Spellsword Mercenary - 3
+Spike Mage - 3
+Stoutstare Brigund - 3
+### Uncommon
+Mending Mage - 1
+### Rare
+Enigmatic Paladin - 1
+Knight of Amber - 1
+Odious Sovereign - 1
+Panopti-Mox - 1
+### Talking
+Pike Sage - 1
+### Common
+Arcane Trickster - 3
+Ardent Intellectual - 3
+Bauble Burglar - 3
+Blue Mage - 3
+Cabochan Collector - 3
+Clandestine Swindler - 3
+Esoteric Savant - 3
+Fortune Teller - 3
+Opulent Hoodlum - 3
+Gem Fiend - 3
+Gembound Ripper - 3
+Hover Mage - 3
+Lazuli Construct - 3
+Magickant - 3
+Party Magician - 3
+Prolific Professor - 3
+Solemn Arcanist - 3
+Soothsayer - 3
+Tarot Reader - 3
+Veiled Curator - 3
+### Uncommon
+Force Mage - 1
+### Rare
+All-Seeing Oracle - 1
+Hourglass Sycophant - 1
+Brogg Polliwog - 1
+Blue Archmagus - 1
+### Talking
+Lonely Wizard - 1
+### Common
+Chimera Warden - 3
+Crystal Cruncher - 3
+Skyborne Soldier - 3
+Mystic Scout - 3
+Shambling Scroll - 3
+### Uncommon
+Book Burner - 1
+### Rare
+Goranj's Mox - 1
+Orlu's Mox - 1
+Bleene's Mox - 1
+Master Goranj - 1
+Master Orlu - 1
+Master Bleene - 1
+Magnus Mox - 1
+### Talking
+Perilous Pyromancer - 1
+## Beast
+### Rare
+g - 1
+## Chaos
+### Side Deck
+Roulette Wheel - 3
+Bailout Bot - 3
+hjdkfhjksd
