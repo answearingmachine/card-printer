@@ -4,9 +4,9 @@ import sys
 import os
 import math
 
-PALETTENAME = "palette_energyconvert.png"
+PALETTENAME = "palette_opacity.png"
 
-THRESHOLD = 5.0
+THRESHOLD = 10.0
 
 paletteImg = Image.open(PALETTENAME).convert("RGBA")
 w,h = paletteImg.size

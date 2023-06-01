@@ -188,22 +188,6 @@ def printAllCards(start=-1,end=99999,mode=0):
     print("Done! Printed "+str(counter)+" cards.")
 # end def
 
-# to be properly defined later!
-# which we did!
-oldInfo = {
-    "temple": "Tech",
-    "tier": "Common",
-    "name": "Automaton",
-    "cost": [[2,"energy"]],
-    "power": 1.0,
-    "health": 2,
-    "sigils": ["Red Gem","Snake Eyes"],
-    "token": [],
-    "traits": ["Abundance"],
-    "tribes": [],
-    "flavor": "This dude"
-}
-
 def printCard(info,savePath="output",show=False,prefix="01x 001 "):
     # A new card to inscrybe.
     img = Image.new("RGBA",(112,156))
@@ -264,37 +248,11 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
     # First, the card's cost.
     costx = 99
     costy = 14
-    for i in info["cost"]:
-        if "energy" in i[1]:
-            # energy is weird with the 12 thing
-            # I'm keeping it as the exception
-            e1Img = Image.open("cost/energy.png")
-            e1 = i[0] # blue cells
-            e2 = 0 # red cells
-            if i[0]>6:
-                e2Img = Image.open("cost/energy2.png")
-                e2 = e1-6
-                e1 -= e2*2
-                for j in range(e2):
-                    img.paste(e2Img,
-                              ((costx-4),costy),
-                              e2Img.convert("RGBA")
-                              )
-                    costx -= 4
-                # end for
-                e2Img.close()
-            # end if
-            for j in range(e1):
-                img.paste(e1Img,
-                          ((costx-4),costy),
-                          e1Img.convert("RGBA")
-                          )
-                costx -= 4
-            # end for
-            costx -= 2
-            e1Img.close()
-        else:
-            # arbitrary cost!
+    costn = len(info["cost"])
+    for ii in range(costn):
+        i = info["cost"][ii] # i made it too lazy first time so this lets me
+                            # have ii as a numeric index still
+        if True: # used to check special cases but no more lol
             string = i[1]
             try:
                 costImg = Image.open("cost/"+string+".png")
@@ -313,9 +271,11 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
             try:
                 threshold = COSTTHRESH[string]
             except KeyError:
+                print("didn't find cost limits for "+string)
                 threshold = 2
+            #end try
                 
-            # just a few.
+            # just a few
             if i[0] < threshold:
                 for j in range(i[0]):
                     img.paste(costImg,
@@ -325,7 +285,7 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
                     costx -= (w-1)
                 costx -= 2
             else:
-                # many bones.
+                # many
                 numberString = str(i[0])
                 img.paste(costImg,
                           ((costx-(w-1)),costy-(h//2-4)),
@@ -343,6 +303,16 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
                 costx += (w-4)
             # end if
             costImg.close()
+        #end if
+        # I don't remember where I put the separator
+        # so im just gonna do it backwards lol
+        # this is to put mox gems together btw
+        if costn > 1 and ii < costn-2:
+            string2 = info["cost"][ii+1][1]
+            print(string2)
+            if string in HAPPYGEMS and string2 in HAPPYGEMS:
+                costx += 2
+            #end if
         #end if
     # end for
 

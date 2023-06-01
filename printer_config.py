@@ -29,14 +29,16 @@ cards_url = url_base+"Cards"
 COSTTHRESH = {
     "blood": 5,
     "bone": 5,
-    "energy": 13,
+    "energy": 5,
 
-    "shattered garnet": 4,
-    "shattered ruby": 4,
-    "shattered topaz": 4,
-    "shattered emerald": 4,
-    "shattered sapphire": 4,
-    "shattered amethyst": 4,
+    "shattered_garnet": 4,
+    "shattered_ruby": 4,
+    "shattered_rubies": 4,
+    "shattered_topaz": 4,
+    "shattered_emerald": 4,
+    "shattered_sapphire": 4,
+    "shattered_amethyst": 4,
+    "shattered_prism" : 4,
 
     # I've got a hunch.
     "shattered" : 4,
@@ -47,6 +49,7 @@ COSTTHRESH = {
     "emerald": 4,
     "sapphire": 4,
     "amethyst": 4,
+    "prism": 4,
     
     "clowny": 1,
     "nuclear": 1,
@@ -58,6 +61,23 @@ COSTTHRESH = {
     "teeth": 4
 }
 # 1 means it will always use 1xR
+
+# All the gems, so they get to be all happy together :)
+# also this is a terrible way of handling this
+HAPPYGEMS = ["garnet", "garnets",
+             "ruby", "rubies",
+             "topaz", "topazes", # what even is the plural of this
+             "emerald", "emeralds",
+             "sapphire", "sapphires",
+             "amethyst", "amethysts",
+             "prism", "prisms",
+             "shattered_garnet", "shattered_garnets",
+             "shattered_ruby", "shattered_rubies",
+             "shattered_topaz", "shattered_topazes",
+             "shattered_emerald", "shattered_emeralds",
+             "shattered_sapphire", "shattered_sapphires",
+             "shattered_amethyst", "shattered amethysts",
+             "shattered_prism", "shattered prisms"]
 
 # Sigils that need to reference another card by name.
 TOKENSIGILS = ["Fledgling","Frozen Away","Creeping Outwards","Loose Tail"]
