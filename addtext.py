@@ -307,9 +307,9 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
         # I don't remember where I put the separator
         # so im just gonna do it backwards lol
         # this is to put mox gems together btw
-        if costn > 1 and ii < costn-2:
+        if costn > 1 and ii < costn-1:
             string2 = info["cost"][ii+1][1]
-            print(string2)
+            #print(string2)
             if string in HAPPYGEMS and string2 in HAPPYGEMS:
                 costx += 2
             #end if
