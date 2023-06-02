@@ -6,7 +6,7 @@ import math
 
 PALETTENAME = "palette_opacity.png"
 
-THRESHOLD = 10.0
+THRESHOLD = 0.01
 
 paletteImg = Image.open(PALETTENAME).convert("RGBA")
 w,h = paletteImg.size
