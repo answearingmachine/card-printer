@@ -7,8 +7,9 @@
 #SHEET_ID = "1tvTXSsFDK5xAVALQPdDPJOitBufJE6UB_MN4q5nbLXk"
 SHEET_ID = "1tvTXSsFDK5xAVALQPdDPJOitBufJE6UB_MN4q5nbLXk"
 
-# Unused.
-SHEET_NAME = "CARDSHEET"
+# Name of the game format.
+# (if I was a good programmer this wouldd be per-sheet)
+FORMAT_NAME = "Inscryption PvP Augmented v0.4 beta"
 
 # the first part of the google docs url.
 url_base = f"https://docs.google.com/spreadsheets/d/"
@@ -21,6 +22,9 @@ sigils_url = url_base+"Sigils"
 
 # The name of the bottom tab with the cards.
 cards_url = url_base+"Cards"
+
+# shut up
+info_url = url_base+"info"
 
 # min # of cost to show as number instead of draw.
 # e.g., since bones is 5, a 4 bone cost is drawn as IIII,
@@ -84,6 +88,7 @@ TOKENSIGILS = ["Fledgling","Frozen Away","Creeping Outwards","Loose Tail"]
 
 # All-caps markers for special sigil types/interactions.
 METASIGILS = ["CELL","CONDUIT","TRANSFORM","RAINBOW","LATCH"]
+# some of these are still unused lol
 
 #SIGILCOLUMNS = [6,7,8] # list of column indicies that have sigils (0-indexed)
 # probably don't touch these because I think I left the other ones hardcoded lol
@@ -103,3 +108,16 @@ COLUMNS = {
     "flavor": 12,
     "illus_credit": 14
 }
+
+##################
+
+# starting a new section
+# maybe eventually I'll have it support custom styles
+
+# for now though this just controls some text boundaries
+TEXTW_SIGIL = 750
+TEXTW_FLAVOR = 820
+TEXTW_CREDIT = 640
+
+FORMATPOS = (560,1483)
+

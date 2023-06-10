@@ -5,6 +5,7 @@ from PIL import ImageFont
 import math
 import pandas as pd
 import sys
+from datetime import date
 
 from printer_config import *
 
@@ -15,6 +16,7 @@ textFont = ImageFont.truetype('Cambria.ttf', 33)
 boldFont = ImageFont.truetype('Cambria-Bold.ttf', 33)
 italFont = ImageFont.truetype('Cambria-Italic.ttf', 33)
 artsFont = ImageFont.truetype('Poly-Regular.ttf', 42)
+formatFont = ImageFont.truetype('Cambria.ttf', 20)
 
 def fetchSigilText(name):
     sdf = (pd.read_csv(sigils_url)).to_dict('split')
@@ -58,7 +60,7 @@ def fetchCardByName(name):
     # end if
     return idn
 
-def printAllCards(start=-1,end=99999,mode=0):
+def printAllCards(start=-1,end=99999,mode=0,fmt=""):
     cdf = (pd.read_csv(cards_url)).to_dict('split')
     #end = min(len(cdf["data"]),end)
     counter = 0
@@ -180,15 +182,15 @@ def printAllCards(start=-1,end=99999,mode=0):
         print(cardInfo)
         if mode==1:
             TTSPath=cardInfo["temple"]+"/"+cardInfo["tier"]+"/"
-            printCard(cardInfo,prefix="output/"+TTSPath)
+            printCard(cardInfo,prefix="output/"+TTSPath,fmt=fmt)
         else:
-            printCard(cardInfo,prefix="output/reprint/")
+            printCard(cardInfo,prefix="output/reprint/",fmt=fmt)
         counter+=1
     # end for
     print("Done! Printed "+str(counter)+" cards.")
 # end def
 
-def printCard(info,savePath="output",show=False,prefix="01x 001 "):
+def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
     # A new card to inscrybe.
     img = Image.new("RGBA",(112,156))
     
@@ -470,6 +472,9 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
 
     # At last, grace it with a description. Something for flavor.
     if info["flavor"] != "BLANK":
+        #ftext = info["flavor"]
+        #print(italFont.getlength(ftext))
+        
         I1.text((561,sigily),
                 info["flavor"],
                 fill=(0,0,0),
@@ -487,7 +492,14 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 "):
         dumbString = artistName + "o"
         shadowText(I1,560,1375,"Illus. "+artistName,artsFont,anchor="ma")
     else:
-        print("no artist?")
+        print("no artist credit found for "+info["name"])
+
+    # Do not let us forget what this is for in the end.
+    if fmt != "":
+        print(fmt)
+        tx,ty = FORMATPOS
+        I1.text(FORMATPOS,fmt,fill=colorSample,font=formatFont,anchor="ma")
+    #end if
         
     # uhhh yeah
     if show:
@@ -511,56 +523,26 @@ def alphaPaste(image,x,y,path):
     image.paste(paste,(x,y),paste.convert("RGBA"))
     paste.close()
 # end def
+
+def textlines_even(font,text,maxw):
+    words = text.strip().split(" ")
+    n = len(words)
+    for i in range(n):
+        print("TODO LOL")
+    #end for
+#end def
     
 def main():
-    newInfo = {
-        "temple": "Tech",
-        "tier": "Common",
-        "name": "Automaton",
-        "cost": [[2,"energy"]],
-        "power": 1.0,
-        "health": 2,
-        "sigils": ["Red Gem","Snake Eyes"],
-        "token": [],
-        "traits": ["Abundance"],
-        "tribes": [],
-        "flavor": "This dude"
-    }
     #printCard(newInfo) # use this to manually print 1
     # do printAllCards(card=79) to print just the card in row 79
 
-    """
-    n = len(sys.argv)
-    print(n)
-    if n == 1:
-        # print all
-        printAllCards()
-    elif n == 2:
-        # print one
-        printAllCards(start=sys.argv[1])
-    elif n == 3:
-        # print range
-        printAllCards(start=sys.argv[1],end=sys.argv[2])
-    else:
-        print("syntax error. syntax is CardPrinter [first] [last]")
-    # end if
-    """
-    # i did that so wrong
+    gameFormatString = FORMAT_NAME +" - "+ str(date.today())
 
     while True:
         a = input("print cards\n[start],[end]\n").split(",")       
         n = len(a)
 
         if n>0:
-            """
-            try:
-                s = int(a[0])-2
-            except:
-                # ok maybe try a string just for funny
-                s = fetchCardByName(a[0])
-            # end try
-            """
-
             if type(a[0]) == type("aa"):
                 s = fetchCardByName(a[0])
             elif type(a[0]) == type(2):
@@ -584,12 +566,12 @@ def main():
             printAllCards()
         elif n == 1:
             # print one
-            printAllCards(start=s)
+            printAllCards(start=s,fmt=gameFormatString)
         elif n == 2:
             # print range
-            printAllCards(start=s,end=e)
+            printAllCards(start=s,end=e,fmt=gameFormatString)
         elif n == 3:
-            printAllCards(start=s,end=e,mode=int(a[2]))
+            printAllCards(start=s,end=e,mode=int(a[2]),fmt=gameFormatString)
         else:
             print("too many arguments what")
         # end if
