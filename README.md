@@ -11,12 +11,15 @@ I did not make most of these graphics. Most of them are attributed to Pixel Prof
 
 There are plans to collaborate and make a web-hosted interface for generating individual cards, but for now this version is intended to be manually installed and run, as it sources from a Google Office spreadsheet that it treats as a database. 
 
+Enter a single card's name to output one card. Enter the names of two cards, separated by a comma (but not a space, e.g. `bee,cat`) to output all cards between them, inclusive.
+
+Card names are case-insensitive but spelling and spaces do matter.
+
+Add an optional argument of `1` after two card names to output cards sorted into folders by temple and tier. (e.g., `Squirrel,Magnus Mox,1`)
+
 **To install:**
 
-* Install [Python](https://www.python.org/downloads/release/python-3113/)
-* Install Pillow (Open command prompt and enter `Python3 -m pip install Pillow`)
-* Install Pandas (`Python3 -m pip install Pandas`)
-* Download the repository, unzip if necessary, and run `addtext.py` to use.
+It should run standalone now hopefully!!! Run dist/printer/printer.exe to use.
 
 **To make custom cards:**
 
