@@ -6,6 +6,7 @@ I did not make most of these graphics. Most of them are attributed to Pixel Prof
 - Jghbug7#8304
 - OkaOka#3352
 - Yoyo4real#6565
+- Desaft
 
 ## How to use
 

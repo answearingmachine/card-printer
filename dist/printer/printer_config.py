@@ -10,7 +10,7 @@ SHEET_ID = "1tvTXSsFDK5xAVALQPdDPJOitBufJE6UB_MN4q5nbLXk"
 # Name of the game format.
 # (if I was a good programmer this wouldd be per-sheet)
 # "Inscryption PvP Augmented v0.4 beta"
-FORMAT_NAME = "Inscryption PvP Augmented snapshot 23w25a"
+FORMAT_NAME = "Inscryption PvP Augmented snapshot 23AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 
 # the first part of the google docs url.
 url_base = f"https://docs.google.com/spreadsheets/d/"
