@@ -408,6 +408,9 @@
   ('concurrent.futures.thread',
    'C:\\Users\\me\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\concurrent\\futures\\thread.py',
    'PYMODULE'),
+  ('configparser',
+   'C:\\Users\\me\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\configparser.py',
+   'PYMODULE'),
   ('contextlib',
    'C:\\Users\\me\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\contextlib.py',
    'PYMODULE'),
@@ -2119,10 +2122,6 @@
   ('printerApp.addtext',
    'F:\\WATCH ME MAKE CARDS HERE '
    'LAWL\\proflkigate\\augment\\card-printer\\printerApp\\addtext.py',
-   'PYMODULE'),
-  ('printer_config',
-   'F:\\WATCH ME MAKE CARDS HERE '
-   'LAWL\\proflkigate\\augment\\card-printer\\printer_config.py',
    'PYMODULE'),
   ('py_compile',
    'C:\\Users\\me\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\py_compile.py',
