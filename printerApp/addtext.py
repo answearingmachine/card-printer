@@ -378,7 +378,7 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
                 if "Power" in i:
                     normalPower = False
                     try:
-                        alphaPaste(img,144,1351,"sigils/variable/"+i.strip()+".png")
+                        alphaPaste(img,144,1351,dir_path+"assets/variable/"+i.strip()+".png")
                     except FileNotFoundError:
                         print("unknown variable power: "+i)
                         shadowText(I1,148,1331,str(int(info["power"])),
@@ -404,13 +404,13 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
         # end if
     # end for
     if conduit:
-        alphaPaste(img,50,850,"conduit_large.png")
+        alphaPaste(img,50,850,dir_path+"assets/misc/conduit_large.png")
     #end if
     for isig in info["sigils"]:
         #print(isig)
         # see if this is a wacky meta sigil like cell or latcher
         if isig in METASIGILS:
-            alphaPaste(img,0,sigily,isig+".png")
+            alphaPaste(img,0,sigily,dir_path+"assets/misc/"+isig+".png")
             sigily+=120
             continue
         #end if
