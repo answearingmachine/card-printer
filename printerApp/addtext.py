@@ -318,7 +318,7 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
 
             try:
                 threshold = cfg.getint("cost.thresholds",string)
-            except KeyError:
+            except:
                 print("didn't find cost limits for "+string)
                 threshold = 2
             #end try
