@@ -302,6 +302,66 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
                             # have ii as a numeric index still
         if True: # used to check special cases but no more lol
             string = i[1]
+            #print(costx)
+
+            # annie energy
+            if string.strip()[0:3] == "nrg":
+                if i[0] == 1:
+                    for j in range(i[0]):
+                        energybar = Image.open(dir_path+"/assets/cost/NRG_base.png")
+                        w = energybar.getbbox()[2]
+                        h = energybar.getbbox()[3]
+                        img.paste(energybar,
+                            ((costx-(w-1)),costy-(h//2-4)),
+                            energybar.convert("RGBA")
+                            )
+                        for ie in "123456":
+                            if ie in string:
+                                energyImg = Image.open(dir_path+"/assets/cost/NRG_"+ie+".png")
+                                img.paste(energyImg,
+                                    ((costx-(w-1)),costy-(h//2-4)),
+                                    energyImg.convert("RGBA")
+                                    )
+                            #end if
+                        #end for
+                        costx -= (w-1)
+                    costx -= 2
+                else:
+                    # many
+                    numberString = str(i[0])
+                    energybar = Image.open(dir_path+"/assets/cost/NRG_base.png")
+                    w = energybar.getbbox()[2]
+                    h = energybar.getbbox()[3]
+                    img.paste(energybar,
+                        ((costx-(w-1)),costy-(h//2-4)),
+                        energybar.convert("RGBA")
+                        )
+                    for ie in "123456":
+                        if ie in string:
+                            energyImg = Image.open(dir_path+"/assets/cost/NRG_"+ie+".png")
+                            img.paste(energyImg,
+                                ((costx-(w-1)),costy-(h//2-4)),
+                                energyImg.convert("RGBA")
+                                )
+                        #end if
+                    #end for
+                    costx-=(w+5)
+                    alphaPaste(img,costx,costy+1,dir_path+"assets/cost/x.png")
+                    costx -= 6
+                    for j in range(len(numberString)):
+                        chrj = numberString[-j-1]
+                        symbolString = dir_path+"assets/cost/"+chrj+".png"
+                        alphaPaste(img,costx,costy,symbolString)
+                        costx -= 6
+                    # end for
+                    costx += 4
+                # end if
+
+                continue
+            #end if
+
+
+
             try:
                 costImg = Image.open(dir_path+"/assets/cost/"+string+".png")
             except FileNotFoundError:
