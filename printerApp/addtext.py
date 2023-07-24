@@ -39,6 +39,7 @@ COLUMN_TRAITS = cfg.getint("sheet.info","COLUMN_TRAITS")
 COLUMN_TRIBES = cfg.getint("sheet.info","COLUMN_TRIBES")
 COLUMN_FLAVOR = cfg.getint("sheet.info","COLUMN_FLAVOR")
 COLUMN_CREDIT = cfg.getint("sheet.info","COLUMN_CREDIT")
+COLUMN_UPDATED = cfg.getint("sheet.info","COLUMN_UPDATED")
 
 # meta sigils (cells etc)
 METASIGILS = []
@@ -58,7 +59,7 @@ for i in cfg.get("cost.thresholds","HAPPYGEMS").split(","):
 
 
 # fonts
-nameFont = ImageFont.truetype(dir_path+'assets/Poly-Regular.ttf', 63)
+nameFont = ImageFont.truetype(dir_path+'assets/fonts/Poly-Regular.ttf', 63)
 statFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria.ttf', 109)
 textFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria.ttf', 33)
 boldFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria-Bold.ttf', 33)
@@ -104,9 +105,15 @@ def fetchCardByName(name):
         print("Failed to find card by name: "+name)
     # end if
     return idn
+# end def
 
 def printAllCards(start=-1,end=99999,mode=0,fmt=""):
     cdf = (pd.read_csv(cards_url)).to_dict('split')
+
+    lastPrintDateList = (pd.read_csv(info_url)).to_dict('split')["data"][2][0].split("/")
+    lastPrintDate = date(int(lastPrintDateList[2][0:4]),int(lastPrintDateList[0]),int(lastPrintDateList[1]))
+
+    sortOutput = (int(mode)%2==1)
 
     #end = min(len(cdf["data"]),end)
     counter = 0
@@ -118,7 +125,27 @@ def printAllCards(start=-1,end=99999,mode=0,fmt=""):
     # end if
     for index in cardRange:
         card = cdf["data"][index]
-        #print("THIS CARD: "+str(card[COLUMN_NAME]))
+
+        #print("Trying to print: "+str(card[COLUMN_NAME]))
+
+        # forgot how to do binary flag checks :(
+        if mode == 2 or mode == 3:
+            # see if this is already up to date, and ignore.
+
+            try:
+                cardDateList = card[COLUMN_UPDATED].split("/")
+                cardDate = date(int(cardDateList[2][0:4]),int(cardDateList[0]),int(cardDateList[1]))
+            except:
+                print("weird date format")
+                cardDate = date(1970,1,1)
+            #end try
+
+            if cardDate <= lastPrintDate:
+                #print("LOL SKIP THIS ONE")
+                continue
+            #end if
+        #end if
+
         cardInfo = {
             "name": str(card[COLUMN_NAME]),
             "temple": str(card[COLUMN_TEMPLE]),
@@ -226,11 +253,11 @@ def printAllCards(start=-1,end=99999,mode=0,fmt=""):
         # end try
         
         #print(cardInfo)
-        if mode==1:
+        if sortOutput:
             TTSPath=cardInfo["temple"]+"/"+cardInfo["tier"]+"/"
-            printCard(cardInfo,prefix=dir_path+"output/"+TTSPath,fmt=fmt)
+            printCard(cardInfo,prefix=confirmDirectory(dir_path+"output/"+TTSPath),fmt=fmt)
         else:
-            printCard(cardInfo,prefix=dir_path+"output/reprint/",fmt=fmt)
+            printCard(cardInfo,prefix=confirmDirectory(dir_path+"output/reprint/"),fmt=fmt)
         counter+=1
     # end for
     print("Done! Printed "+str(counter)+" cards.")
@@ -286,8 +313,8 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
     img.paste(frameImg,(0,0),frameImg.convert("RGBA"))
     frameImg.close()
 
-    # Get this one pixel color.
-    # a surprise tool that will help us later.
+    # Without having met the other text functions, this color sample is meaningless.
+    # Pay it no mind for now.
     colorSample = img.getpixel((66,18))
 
     # Let us begin to inscrybe it.
@@ -441,8 +468,7 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
                         alphaPaste(img,144,1351,dir_path+"assets/variable/"+i.strip()+".png")
                     except FileNotFoundError:
                         print("unknown variable power: "+i)
-                        shadowText(I1,148,1331,str(int(info["power"])),
-                                   statFont,anchor="la")
+                        normalPower = True
                     # end try
                 # end if
             # end for
@@ -466,12 +492,51 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
     if conduit:
         alphaPaste(img,50,850,dir_path+"assets/misc/conduit_large.png")
     #end if
-    for isig in info["sigils"]:
+
+    nsig = len(info["sigils"])
+    # see
+    # python's thing where you can just make a for loop go through something without ever making a numerical iterator is really convenient, but ever more it seems like I always inevitably end up having to go back and make one anyway.
+    specialSigil = False
+    dontPutTheExtraLineThere = False
+    for isign in range(nsig):
+        isig = info["sigils"][isign]
         #print(isig)
         # see if this is a wacky meta sigil like cell or latcher
         if isig in METASIGILS:
             alphaPaste(img,0,sigily,dir_path+"assets/misc/"+isig+".png")
             sigily+=120
+
+            # special dark box for latch sigils
+            if isig == "LATCH": # some day replace this with a proper check for if we add more like this
+                if isign == nsig-1:
+                    print("Malformed card! You put a conditional with no sigils after it!")
+                    # technically as it stands you can do this anyways with the other conditionals and there's no errors
+                    # but i need an error handler lol
+                    print("("+info["name"]+")")
+                    continue
+                #end if
+
+                nextSigilLines = len(fetchSigilText(info["sigils"][isign+1]).split("\n")) # if i ever get auto line breaks this part will get fucked so uh dont let me forget
+                #print("latching: "+info["sigils"][isign+1]+" ("+str(nextSigilLines)+" lines)")
+                if nextSigilLines==1:
+                    nextSigilLines=2 # need room at least for the icon
+                #end if
+
+                darkBox = Image.open(dir_path+"/assets/misc/META_DARKBOX.png")
+                cropHeight = (nextSigilLines*35)+30
+                if cropHeight%10==5:
+                    cropHeight+=5
+                #end if
+                darkBoxC = darkBox.crop((0,0,1120,cropHeight))
+                img.paste(darkBoxC,(0,sigily),darkBoxC.convert("RGBA"))
+                darkBox.close()
+                darkBoxEnd = Image.open(dir_path+"/assets/misc/META_DARKBOX_END.png")
+                img.paste(darkBoxEnd,(0,sigily+cropHeight-10),darkBoxEnd.convert("RGBA"))
+
+                sigily+=(20)
+                specialSigil = True
+
+            #end if
             continue
         #end if
         # fetch icon and paste
@@ -479,7 +544,12 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
             sigilImg = Image.open(dir_path+"/assets/sigils/"+isig+".png")
         except FileNotFoundError:
             sigilImg = Image.open(dir_path+"/assets/sigils/zerror.png")
+        #end try
+        if specialSigil:
+            sigilImg = recolorImage(sigilImg,(255,255,255))
+        #end if
         img.paste(sigilImg,(sigilx,sigily),sigilImg.convert("RGBA"))
+        sigilImg.close()
 
         # write name
         text = fetchSigilText(isig)
@@ -502,12 +572,17 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
             singleLine = True
             textLines[0] = "missingno"
             
+        if specialSigil:
+            textColor = (255,255,255)
+        else:
+            textColor = (0,0,0)
+        #end if
 
         # print name
         l = I1.textlength(isig+": ",boldFont)
         I1.text((sigilx+80, sigily+textOffset),
                 isig+": ",
-                fill=(0,0,0),
+                fill=textColor,
                 font=boldFont,
                 anchor="la"
                 )
@@ -516,7 +591,7 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
         # (might be the only line)
         I1.text((sigilx+80+l, sigily+textOffset),
                 textLines[0],
-                fill=(0,0,0),
+                fill=textColor,
                 font=textFont,
                 anchor="la"
                 )
@@ -526,15 +601,22 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
             for i in range(n)[1:]:
                 I1.text((sigilx+80, sigily+textOffset+40*i),
                 textLines[i],
-                fill=(0,0,0),
+                fill=textColor,
                 font=textFont,
                 anchor="la"
                 )
             sigily += (n-2)*40     
         sigily += 80
         # TODO: figure out inline italics for tribe names
+
+        if specialSigil:
+            specialSigil = False
+            dontPutTheExtraLineThere = True
+            sigily+=10
+        #end if
     # end for
-    if info["sigils"] != []:
+
+    if info["sigils"] != [] and not dontPutTheExtraLineThere:
         alphaPaste(img,150,sigily-(sigily%10),dir_path+"/assets/misc/Separator_large.png")
         sigily += 10
     # end if
@@ -631,12 +713,37 @@ def alphaPaste(image,x,y,path):
     paste.close()
 # end def
 
+# I think this is just unfinished lol
 def textlines_even(font,text,maxw):
     words = text.strip().split(" ")
     n = len(words)
     for i in range(n):
         print("TODO LOL")
     #end for
+#end def
+
+def confirmDirectory(path):
+    if os.path.exists(path):
+        return path
+    else:
+        os.makedirs(path)
+        return path
+    #end if
+#end def
+
+def recolorImage(img,color):
+    img = img.convert("RGBA")
+    w,h = img.size
+    nr,ng,nb = color
+    for y in range(h):
+        for x in range(w):
+            r,g,b,a = img.getpixel((x,y))
+            img.putpixel((x,y),(nr,ng,nb,a))
+        #end for
+    #end for
+    return img
+#end def
+
 #end def
     
 def main():
@@ -686,6 +793,3 @@ def main():
     # end while
 # end def
 main()
-
-
-
