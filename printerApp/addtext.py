@@ -57,6 +57,11 @@ for i in cfg.get("cost.thresholds","HAPPYGEMS").split(","):
     HAPPYGEMS.append(i)
 #end for
 
+COLORSIGILS = []
+for i in cfg.get("sigils","COLORSIGILS").split(","):
+    COLORSIGILS.append(i)
+#end for
+
 
 # fonts
 nameFont = ImageFont.truetype(dir_path+'assets/fonts/Poly-Regular.ttf', 63)
@@ -326,59 +331,58 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
     costn = len(info["cost"])
     for ii in range(costn):
         i = info["cost"][ii] # i made it too lazy first time so this lets me
-                            # have ii as a numeric index still
-        if True: # used to check special cases but no more lol
-            string = i[1]
+                             # have ii as a numeric index still
+        string = i[1]
+        try:
+            costImg = Image.open(dir_path+"/assets/cost/"+string+".png")
+        except FileNotFoundError:
             try:
+                string = string[:-1]
                 costImg = Image.open(dir_path+"/assets/cost/"+string+".png")
-            except FileNotFoundError:
-                try:
-                    string = string[:-1]
-                    costImg = Image.open(dir_path+"/assets/cost/"+string+".png")
-                except:
-                    print("Unknown cost: "+string)
-                    costImg = Image.open(dir_path+"/assets/cost/zerror.png")
-                # end try
-            # end try
-            w = costImg.getbbox()[2]
-            h = costImg.getbbox()[3]
-
-            try:
-                threshold = cfg.getint("cost.thresholds",string)
             except:
-                print("didn't find cost limits for "+string)
-                threshold = 2
-            #end try
-                
-            # just a few
-            if i[0] < threshold:
-                for j in range(i[0]):
-                    img.paste(costImg,
-                              ((costx-(w-1)),costy-(h//2-4)),
-                              costImg.convert("RGBA")
-                              )
-                    costx -= (w-1)
-                costx -= 2
-            else:
-                # many
-                numberString = str(i[0])
+                print("Unknown cost: "+string)
+                costImg = Image.open(dir_path+"/assets/cost/zerror.png")
+            # end try
+        # end try
+        w = costImg.getbbox()[2]
+        h = costImg.getbbox()[3]
+
+        try:
+            threshold = cfg.getint("cost.thresholds",string)
+        except:
+            print("didn't find cost limits for "+string)
+            threshold = 2
+        #end try
+            
+        # just a few
+        if i[0] < threshold:
+            for j in range(i[0]):
                 img.paste(costImg,
                           ((costx-(w-1)),costy-(h//2-4)),
                           costImg.convert("RGBA")
                           )
-                costx -= ((w-1)+6)
-                alphaPaste(img,costx,costy+1,dir_path+"assets/cost/x.png")
-                costx-=6
-                for j in range(len(numberString)):
-                    chrj = numberString[-j-1]
-                    symbolString = dir_path+"assets/cost/"+chrj+".png"
-                    alphaPaste(img,costx,costy,symbolString)
-                    costx -= 6
-                # end for
-                costx += (w-4)
-            # end if
-            costImg.close()
-        #end if
+                costx -= (w-1)
+            costx -= 2
+        else:
+            # many
+            numberString = str(i[0])
+            img.paste(costImg,
+                      ((costx-(w-1)),costy-(h//2-4)),
+                      costImg.convert("RGBA")
+                      )
+            costx -= ((w-1)+6)
+            alphaPaste(img,costx,costy+1,dir_path+"assets/cost/x.png")
+            costx-=6
+            for j in range(len(numberString)):
+                chrj = numberString[-j-1]
+                symbolString = dir_path+"assets/cost/"+chrj+".png"
+                alphaPaste(img,costx,costy,symbolString)
+                costx -= 6
+            # end for
+            costx += (w-4)
+        # end if
+        costImg.close()
+
         # I don't remember where I put the separator
         # so im just gonna do it backwards lol
         # this is to put mox gems together btw
@@ -396,26 +400,24 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
     I1 = ImageDraw.Draw(img)
     
     # Next, the power and health. The numbers.
-    if True:
-        # variable stat checker
-        #print(info["traits"])
-        normalPower = True
-        if info["traits"] != []:
-            for i in info["traits"]:
-                if "Power" in i:
-                    normalPower = False
-                    try:
-                        alphaPaste(img,144,1351,dir_path+"assets/variable/"+i.strip()+".png")
-                    except FileNotFoundError:
-                        print("unknown variable power: "+i)
-                        normalPower = True
-                    # end try
-                # end if
-            # end for
-        # end if
-        if normalPower:
-            shadowText(I1,148,1331,str(int(info["power"])),statFont,anchor="la")
-        # end if
+    # variable stat checker
+    #print(info["traits"])
+    normalPower = True
+    if info["traits"] != []:
+        for i in info["traits"]:
+            if "Power" in i:
+                normalPower = False
+                try:
+                    alphaPaste(img,144,1351,dir_path+"assets/variable/"+i.strip()+".png")
+                except FileNotFoundError:
+                    print("unknown variable power: "+i)
+                    normalPower = True
+                # end try
+            # end if
+        # end for
+    # end if
+    if normalPower:
+        shadowText(I1,148,1331,str(int(info["power"])),statFont,anchor="la")
     # end if
     
     shadowText(I1,968,1331,str(int(info["health"])),statFont,anchor="ra")
@@ -423,6 +425,7 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
     # Next, we will add the sigils.
     sigilx = 150
     sigily = 920
+
     conduit = False
     for isig in info["sigils"]:
         if "Conduit" in isig:
@@ -479,15 +482,36 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
             #end if
             continue
         #end if
-        # fetch icon and paste
-        try:
-            sigilImg = Image.open(dir_path+"/assets/sigils/"+isig+".png")
-        except FileNotFoundError:
-            sigilImg = Image.open(dir_path+"/assets/sigils/zerror.png")
-        #end try
+        
         if specialSigil:
-            sigilImg = recolorImage(sigilImg,(255,255,255))
+            if isig in COLORSIGILS:
+                try:
+                    sigilImg = recolorImage(Image.open(dir_path+"/assets/sigils/"+isig+"_outline.png"),(255,255,255))
+                except FileNotFoundError:
+                    sigilImg = recolorImage(Image.open(dir_path+"/assets/sigils/"+isig+".png"),(255,255,255))
+                    print("No outline variant for sigil: "+isig)
+                except FileNotFoundError:
+                    sigilImg = recolorImage(Image.open(dir_path+"/assets/sigils/zerror.png"),(255,255,255))
+                    print("No icon for sigil: "+isig)
+                #end try
+            else:
+                try:
+                    sigilImg = recolorImage(Image.open(dir_path+"/assets/sigils/"+isig+".png"),(255,255,255))
+                except FileNotFoundError:
+                    sigilImg = recolorImage(Image.open(dir_path+"/assets/sigils/zerror.png"),(255,255,255))
+                    print("No icon for sigil: "+isig)
+                #end try
+            #end if
+        else:
+            # fetch icon and paste
+            try:
+                sigilImg = Image.open(dir_path+"/assets/sigils/"+isig+".png")
+            except FileNotFoundError:
+                sigilImg = Image.open(dir_path+"/assets/sigils/zerror.png")
+                print("No icon for sigil: "+isig)
+            #end try
         #end if
+
         img.paste(sigilImg,(sigilx,sigily),sigilImg.convert("RGBA"))
         sigilImg.close()
 
