@@ -62,6 +62,10 @@ for i in cfg.get("sigils","COLORSIGILS").split(","):
     COLORSIGILS.append(i)
 #end for
 
+DECALTRAITS = []
+for i in cfg.get("sigils","DECALTRAITS").split(","):
+    DECALTRAITS.append(i)
+#end for
 
 # fonts
 nameFont = ImageFont.truetype(dir_path+'assets/fonts/Poly-Regular.ttf', 63)
@@ -408,7 +412,7 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
             if "Power" in i:
                 normalPower = False
                 try:
-                    alphaPaste(img,144,1351,dir_path+"assets/variable/"+i.strip()+".png")
+                    alphaPaste(img,144,1351,dir_path+"assets/variab /"+i.strip()+".png")
                 except FileNotFoundError:
                     print("unknown variable power: "+i)
                     normalPower = True
@@ -587,6 +591,11 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
 
     # Do let me know of any traits this card might have.
     for itrait in info["traits"]:
+        if itrait in DECALTRAITS:
+            #print("oh shit its a fake one")
+            alphaPaste(img,0,0,dir_path+"/assets/misc/"+itrait+".png")
+            continue
+        # end if
         textLines = fetchSigilText(itrait).split("\n")
         n = len(textLines)
 
