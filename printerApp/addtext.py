@@ -412,7 +412,7 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
             if "Power" in i:
                 normalPower = False
                 try:
-                    alphaPaste(img,144,1351,dir_path+"assets/variab /"+i.strip()+".png")
+                    alphaPaste(img,144,1351,dir_path+"assets/variable/"+i.strip()+".png")
                 except FileNotFoundError:
                     print("unknown variable power: "+i)
                     normalPower = True
