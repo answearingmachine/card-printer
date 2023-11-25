@@ -76,6 +76,17 @@ italFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria-Italic.ttf', 33)
 artsFont = ImageFont.truetype(dir_path+'assets/fonts/Poly-Regular.ttf', 42)
 formatFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria.ttf', 20)
 
+#LOL
+"""
+nameFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 63)
+statFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 109)
+textFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 33)
+boldFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 33)
+italFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 33)
+artsFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 42)
+formatFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 20)
+"""
+
 def fetchSigilText(name):
     sdf = (pd.read_csv(sigils_url)).to_dict('split')
     text = "Unknown sigil: "+str(name)
