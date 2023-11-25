@@ -62,6 +62,10 @@ for i in cfg.get("sigils","COLORSIGILS").split(","):
     COLORSIGILS.append(i)
 #end for
 
+DECALTRAITS = []
+for i in cfg.get("sigils","DECALTRAITS").split(","):
+    DECALTRAITS.append(i)
+#end for
 
 # fonts
 nameFont = ImageFont.truetype(dir_path+'assets/fonts/Poly-Regular.ttf', 63)
@@ -71,6 +75,17 @@ boldFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria-Bold.ttf', 33)
 italFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria-Italic.ttf', 33)
 artsFont = ImageFont.truetype(dir_path+'assets/fonts/Poly-Regular.ttf', 42)
 formatFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria.ttf', 20)
+
+#LOL
+"""
+nameFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 63)
+statFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 109)
+textFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 33)
+boldFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 33)
+italFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 33)
+artsFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 42)
+formatFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 20)
+"""
 
 def fetchSigilText(name):
     sdf = (pd.read_csv(sigils_url)).to_dict('split')
@@ -586,7 +601,14 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
     # end if
 
     # Do let me know of any traits this card might have.
+    hasTraits = False
     for itrait in info["traits"]:
+        if itrait in DECALTRAITS:
+            #print("oh shit its a fake one")
+            alphaPaste(img,0,0,dir_path+"/assets/misc/"+itrait+".png")
+            continue
+        # end if
+        hasTraits = True
         textLines = fetchSigilText(itrait).split("\n")
         n = len(textLines)
 
@@ -600,7 +622,7 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
             sigily += 35
         sigily += 5
     # end for
-    if info["traits"] != []:
+    if hasTraits:
         sigily = (math.ceil(sigily/10))*10
         alphaPaste(img,150,sigily,dir_path+"/assets/misc/Separator_large.png")
         sigily += 10
