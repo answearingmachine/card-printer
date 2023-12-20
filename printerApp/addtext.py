@@ -441,13 +441,85 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
     sigilx = 150
     sigily = 920
 
+    # check to see if we need any of the special overlays (currently conduits and mox)
+
+    gem = False
+    if "Mox" in info["tribes"]:
+        gem = "!"
+        if "Orange Gem" in info["sigils"] or "Blue Gem" in info["sigils"] or "Green Gem" in info["sigils"]:
+            if "Orange Gem" in info["sigils"]:
+                gem += "O"
+            # end if
+            if "Blue Gem" in info["sigils"]:
+                gem += "B"
+            # end if
+            if "Green Gem" in info["sigils"]:
+                gem += "G"
+            # end if
+        elif "Magnificent Gem" in info["sigils"]:
+            gem += "OBG"
+        elif "Prism Gem" in info["sigils"]:
+            gem = "P"
+        elif "Gem Shard" in info["sigils"]:
+            gem = "S"
+        # end if
+    # end if
+
     conduit = False
+    """
     for isig in info["sigils"]:
-        if "Conduit" in isig:
+        if "Conduit" in isig: # this might get reworked
             conduit = True
         # end if
     # end for
-    if conduit:
+    """
+    if "Conduit" in info["tribes"]:
+        conduit = True
+    # end if
+
+    # draw
+    
+    if conduit and gem:
+        alphaPaste(img,50,840,dir_path+"assets/misc/gems/gemconduit.png")
+        if gem=="!":
+            gem=""
+        # end if
+
+        # this is a terrible way to fix this
+        if "Orange Conduit" in info["sigils"]:
+            gem += "O"
+        # end if
+        if "Blue Conduit" in info["sigils"]:
+            gem += "B"
+        # end if
+        if "Green Conduit" in info["sigils"]:
+            gem += "G"
+        # end if
+        if "Prism Conduit" in info["sigils"]:
+            gem += "P"
+        elif gem == "":
+            gem = "S"
+        # end if
+        gemImg = dir_path+"assets/misc/gems/gem"+gem+".png"
+        alphaPaste(img,530,850,gemImg)
+    elif gem:
+        if gem == "P":
+            alphaPaste(img,40,840,dir_path+"assets/misc/gems/moxband_prism.png")
+        elif gem == "S":
+            alphaPaste(img,40,840,dir_path+"assets/misc/gems/moxband_shard.png")
+        else:
+            alphaPaste(img,40,840,dir_path+"assets/misc/gems/moxband_3empty.png")
+            if "O" in gem:
+                alphaPaste(img,440,850,dir_path+"assets/misc/gems/gemO.png")
+            # end if
+            if "B" in gem:
+                alphaPaste(img,530,850,dir_path+"assets/misc/gems/gemB.png")
+            # end if
+            if "G" in gem:
+                alphaPaste(img,610,850,dir_path+"assets/misc/gems/gemG.png")
+            # end if
+        # end if
+    elif conduit:
         alphaPaste(img,50,850,dir_path+"assets/misc/conduit_large.png")
     #end if
 
