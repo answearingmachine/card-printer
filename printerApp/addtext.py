@@ -47,6 +47,12 @@ for i in cfg.get("sigils","METASIGILS").split(","):
     METASIGILS.append(i)
 #end for
 
+# meta sigils 2
+BOXSIGILS = []
+for i in cfg.get("sigils","BOXSIGILS").split(","):
+    BOXSIGILS.append(i)
+#end for
+
 TOKENSIGILS = []
 for i in cfg.get("sigils","TOKENSIGILS").split(","):
     TOKENSIGILS.append(i)
@@ -521,7 +527,7 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
         # end if
     elif conduit:
         alphaPaste(img,50,850,dir_path+"assets/misc/conduit_large.png")
-    #end if
+    # end if
 
     nsig = len(info["sigils"])
     # see
@@ -533,11 +539,13 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
         #print(isig)
         # see if this is a wacky meta sigil like cell or latcher
         if isig in METASIGILS:
-            alphaPaste(img,0,sigily,dir_path+"assets/misc/"+isig+".png")
-            sigily+=120
+            if isig != "INFOBOX":
+                alphaPaste(img,0,sigily,dir_path+"assets/misc/"+isig+".png")
+                sigily+=120
+            # end if
 
             # special dark box for latch sigils
-            if isig == "LATCH": # some day replace this with a proper check for if we add more like this
+            if isig in BOXSIGILS: # some day replace this with a proper check for if we add more like this
                 if isign == nsig-1:
                     print("Malformed card! You put a conditional with no sigils after it!")
                     # technically as it stands you can do this anyways with the other conditionals and there's no errors
