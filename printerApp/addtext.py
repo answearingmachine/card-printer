@@ -27,6 +27,9 @@ cards_url = main_url+cfg.get("sheet.info","url_extend")+cfg.get("sheet.info","ca
 sigils_url = main_url+cfg.get("sheet.info","url_extend")+cfg.get("sheet.info","sigils_tab")
 info_url = main_url+cfg.get("sheet.info","url_extend")+cfg.get("sheet.info","info_tab")
 
+SDF = (pd.read_csv(sigils_url)).to_dict('split')
+CDF = (pd.read_csv(cards_url)).to_dict('split')
+
 COLUMN_NAME = cfg.getint("sheet.info","COLUMN_NAME")
 COLUMN_TEMPLE = cfg.getint("sheet.info","COLUMN_TEMPLE")
 COLUMN_TIER = cfg.getint("sheet.info","COLUMN_TIER")
@@ -75,26 +78,31 @@ for i in cfg.get("sigils","DECALTRAITS").split(","):
 
 # fonts
 nameFont = ImageFont.truetype(dir_path+'assets/fonts/Poly-Regular.ttf', 63)
+statFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria.otf', 109)
+textFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria.otf', 33)
+boldFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria-Bold.ttf', 33)
+italFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria-Italic.ttf', 33)
+artsFont = ImageFont.truetype(dir_path+'assets/fonts/Poly-Regular.ttf', 42)
+formatFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria.otf', 20)
+
+# backup
+"""
+nameFont = ImageFont.truetype(dir_path+'assets/fonts/Poly-Regular.ttf', 63)
 statFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria.ttf', 109)
 textFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria.ttf', 33)
 boldFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria-Bold.ttf', 33)
 italFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria-Italic.ttf', 33)
 artsFont = ImageFont.truetype(dir_path+'assets/fonts/Poly-Regular.ttf', 42)
 formatFont = ImageFont.truetype(dir_path+'assets/fonts/Cambria.ttf', 20)
-
-#LOL
-"""
-nameFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 63)
-statFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 109)
-textFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 33)
-boldFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 33)
-italFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 33)
-artsFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 42)
-formatFont = ImageFont.truetype(dir_path+'assets/fonts/COMIC.ttf', 20)
 """
 
-def fetchSigilText(name):
-    sdf = (pd.read_csv(sigils_url)).to_dict('split')
+def fetchSigilText(name,liveUpdate=False):
+    #sdf = (pd.read_csv(sigils_url)).to_dict('split')
+    if liveUpdate:
+        sdf = (pd.read_csv(sigils_url)).to_dict('split')
+    else:
+        sdf = SDF
+    #end if
     text = "Unknown sigil: "+str(name)
     found = False
     # Okay so I don't know about the data structures well enough
@@ -113,7 +121,8 @@ def fetchSigilText(name):
 # end def
 
 def fetchCardByName(name):
-    cdf = pd.read_csv(cards_url).to_dict('split')
+    #cdf = pd.read_csv(cards_url).to_dict('split')
+    cdf = CDF
     found = False
     n=len(cdf["data"])
     idn = 0
@@ -134,12 +143,20 @@ def fetchCardByName(name):
 # end def
 
 def printAllCards(start=-1,end=99999,mode=0,fmt=""):
-    cdf = (pd.read_csv(cards_url)).to_dict('split')
+    #cdf = (pd.read_csv(cards_url)).to_dict('split')
+
+    if mode & 4: #live update mode
+        cdf = (pd.read_csv(cards_url)).to_dict('split')
+        livePreview = True
+    else:
+        cdf = CDF
+        livePreview = False
+    # end if
 
     lastPrintDateList = (pd.read_csv(info_url)).to_dict('split')["data"][2][0].split("/")
     lastPrintDate = date(int(lastPrintDateList[2][0:4]),int(lastPrintDateList[0]),int(lastPrintDateList[1]))
 
-    sortOutput = (int(mode)%2==1)
+    sortOutput = (mode & 1)
 
     #end = min(len(cdf["data"]),end)
     counter = 0
@@ -154,8 +171,8 @@ def printAllCards(start=-1,end=99999,mode=0,fmt=""):
 
         #print("Trying to print: "+str(card[COLUMN_NAME]))
 
-        # forgot how to do binary flag checks :(
-        if mode == 2 or mode == 3:
+        # rembered how to do binary flag checks :)
+        if mode & 2:
             # see if this is already up to date, and ignore.
 
             try:
@@ -281,15 +298,15 @@ def printAllCards(start=-1,end=99999,mode=0,fmt=""):
         #print(cardInfo)
         if sortOutput:
             TTSPath=cardInfo["temple"]+"/"+cardInfo["tier"]+"/"
-            printCard(cardInfo,prefix=confirmDirectory(dir_path+"output/"+TTSPath),fmt=fmt)
+            printCard(cardInfo,prefix=confirmDirectory(dir_path+"output/"+TTSPath),fmt=fmt,liveUpdate=livePreview)
         else:
-            printCard(cardInfo,prefix=confirmDirectory(dir_path+"output/reprint/"),fmt=fmt)
+            printCard(cardInfo,prefix=confirmDirectory(dir_path+"output/reprint/"),fmt=fmt,liveUpdate=livePreview)
         counter+=1
     # end for
     print("Done! Printed "+str(counter)+" cards.")
 # end def
 
-def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
+def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt="",liveUpdate=False):
     # A new card to inscrybe.
     img = Image.new("RGBA",(112,156))
     
@@ -554,7 +571,7 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
                     continue
                 #end if
 
-                nextSigilLines = len(fetchSigilText(info["sigils"][isign+1]).split("\n")) # if i ever get auto line breaks this part will get fucked so uh dont let me forget
+                nextSigilLines = len(fetchSigilText(info["sigils"][isign+1],liveUpdate).split("\n")) # if i ever get auto line breaks this part will get fucked so uh dont let me forget
                 #print("latching: "+info["sigils"][isign+1]+" ("+str(nextSigilLines)+" lines)")
                 if nextSigilLines==1:
                     nextSigilLines=2 # need room at least for the icon
@@ -611,10 +628,14 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
         sigilImg.close()
 
         # write name
-        text = fetchSigilText(isig)
+        text = fetchSigilText(isig,liveUpdate)
         if isig in TOKENSIGILS:
-            halves = text.split("(new card)")
-            text = halves[0]+'\"'+info["token"]+'\"'+halves[1]
+            try:
+                halves = text.split("(new card)")
+                text = halves[0]+'\"'+info["token"]+'\"'+halves[1]
+            except IndexError:
+                text = "missingno"
+                print("Improper token slecification on sigil: "+isig)
         # end if
         try:
             textLines = text.split("\n")
@@ -629,7 +650,7 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
         except AttributeError:
             textOffset = 15
             singleLine = True
-            textLines[0] = "missingno"
+            textLines = ["missingno"]
             
         if specialSigil:
             textColor = (255,255,255)
@@ -689,7 +710,7 @@ def printCard(info,savePath="output",show=False,prefix="01x 001 ",fmt=""):
             continue
         # end if
         hasTraits = True
-        textLines = fetchSigilText(itrait).split("\n")
+        textLines = fetchSigilText(itrait,liveUpdate).split("\n")
         n = len(textLines)
 
         for i in textLines:
@@ -813,13 +834,9 @@ def recolorImage(img,color):
 #end def
     
 def main():
-    #printCard(newInfo) # use this to manually print 1
-    # do printAllCards(card=79) to print just the card in row 79
-
-    gameFormatString = cfg.get("sheet.info","FORMAT_NAME") +" - "+ str(date.today())
-
     while True:
-        a = input("print cards\n[start],[end]\n").split(",")       
+        gameFormatString = cfg.get("sheet.info","FORMAT_NAME") +" - "+ str(date.today())
+        a = input("print cards\n[start],[end]\n").split(",")
         n = len(a)
 
         if n>0:
@@ -829,8 +846,6 @@ def main():
             elif type(a[0]) == type(2):
                 s = int(s)
             #end if
-
-            # idk what else to try here
 
             if n>1:
                 try:
